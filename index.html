@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Earl Rags — Public Preview / Demo Mode</title>
+<style>
+:root{
+  --bg:#0c0d0e;--panel:#151617;--panel2:#1b1c1e;--ink:#f1ebde;--muted:#bcb4a5;--line:#373737;
+  --red:#ef2b2d;--red2:#cf1b22;--sand:#f3e3c0;--chalk:#fbf5e8;--green:#8fb18e;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:radial-gradient(circle at 20% 0%, #242424 0, #111 35%, #090909 100%);} 
+a{text-decoration:none;color:inherit} img{max-width:100%;display:block}
+body:before{content:"";position:fixed;inset:0;background-image:radial-gradient(#ffffff10 1px,transparent 1px),linear-gradient(transparent,rgba(0,0,0,.22));background-size:8px 8px,100% 100%;pointer-events:none;opacity:.32}
+.wrap{width:min(1200px,92vw);margin:auto;position:relative}
+.topbar{background:#0f1011;border-bottom:1px solid #27292b;position:sticky;top:0;z-index:10;backdrop-filter: blur(6px)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:78px}
+.brand{font-size:30px;font-weight:1000;font-style:italic;letter-spacing:-1px;color:#fff;position:relative}
+.brand:after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:5px;background:var(--red);transform:skew(-18deg)}
+.links{display:flex;gap:22px;flex-wrap:wrap;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:.8px}
+.links a{color:#e8e4d8}.links a.active,.links a:hover{color:white;text-shadow:0 0 12px rgba(255,255,255,.2)}
+.cart{font-size:22px}
+.hero{padding:34px 0 10px;background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));}
+.heroGrid{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:stretch}
+.heroCopy{padding:20px 0 10px}
+.kicker{display:inline-block;background:rgba(255,255,255,.04);border:1px solid #2c2e31;padding:7px 10px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.4px;color:#ddd4c2}
+.headline{font-size:clamp(46px,6.5vw,92px);line-height:.9;text-transform:uppercase;font-weight:1000;font-style:italic;letter-spacing:-3px;margin:18px 0 14px;text-shadow:4px 4px 0 rgba(0,0,0,.55)}
+.headline .stroke{display:block;color:var(--chalk)}
+.headline .accent{display:block;color:var(--chalk);position:relative}
+.headline .accent:after{content:"";display:block;width:62%;height:10px;background:var(--red);margin-top:6px;transform:skew(-22deg)}
+.sub{font-size:18px;line-height:1.45;color:#ddd6c7;max-width:560px;margin-bottom:22px}
+.ctas{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0 22px}
+.btn{appearance:none;border:0;cursor:pointer;background:var(--red);color:white;padding:16px 24px;border-radius:4px;font-size:16px;font-weight:1000;text-transform:uppercase;letter-spacing:.8px;box-shadow:0 12px 28px rgba(0,0,0,.25)}
+.btn.secondary{background:#242628;color:#eee;border:1px solid #3b3d40}
+.btn.ghost{background:transparent;border:1px solid #4e5054}
+.quick{display:flex;gap:18px;flex-wrap:wrap;padding:12px 0 0;color:#d8cfbf;font-weight:900;font-size:14px;text-transform:uppercase}
+.quick span{display:inline-flex;align-items:center;gap:8px}
+.heroVisual{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{background:linear-gradient(180deg,#181a1b,#111213);border:1px solid #2b2d30;border-radius:12px;overflow:hidden;box-shadow:0 20px 36px rgba(0,0,0,.35)}
+.card .label{position:absolute;top:12px;left:12px;background:var(--chalk);color:#121212;padding:8px 12px;font-weight:1000;font-style:italic;text-transform:uppercase;box-shadow:0 5px 14px rgba(0,0,0,.25);transform:rotate(-4deg)}
+.card.visual{position:relative;padding-top:48px}
+.photoPad{padding:12px;background:#f5f0e3}
+.photoPad img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px}
+.arrow{display:flex;align-items:center;justify-content:center;font-size:42px;color:var(--red);font-weight:1000}
+.afterNote{padding:10px 14px 16px;color:#d8d0c0;font-size:12px;line-height:1.55}
+.process{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.step{background:#121314;border:1px solid #2b2d30;border-radius:8px;padding:14px}
+.step b{display:flex;align-items:center;gap:8px;font-size:13px;text-transform:uppercase}.step p{font-size:12px;line-height:1.45;color:#bbb3a3;margin:8px 0 0}
+.section{padding:26px 0}
+.sectionTitle{font-size:clamp(34px,4.9vw,62px);font-style:italic;text-transform:uppercase;line-height:.95;letter-spacing:-1.5px;margin:0 0 8px;font-weight:1000}
+.sectionTitle .underline{display:block;width:220px;height:8px;background:var(--red);transform:skew(-22deg);margin-top:8px}
+.muted{color:var(--muted);line-height:1.6;max-width:900px}
+.conversions{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}
+.convCard{background:linear-gradient(180deg,#191a1c,#101113);border:1px solid #2c2f32;border-radius:12px;overflow:hidden}
+.convMedia{display:grid;grid-template-columns:1fr 36px 1fr;align-items:stretch;background:#0c0d0e;padding:12px}
+.convMedia .cell{position:relative;background:#f4efe3;border-radius:9px;overflow:hidden;min-height:220px}
+.convMedia .cell img{width:100%;height:100%;object-fit:cover}
+.badge{position:absolute;top:8px;left:8px;background:#fff6e4;color:#111;padding:7px 10px;border-radius:6px;font-size:11px;font-weight:1000;font-style:italic;text-transform:uppercase}
+.convMeta{padding:15px 16px 18px}.convMeta h3{margin:0 0 8px;font-size:22px}.convMeta p{margin:0;color:#beb6a8;font-size:13px;line-height:1.55}
+.arrowMini{display:flex;align-items:center;justify-content:center;color:var(--red);font-size:28px;font-weight:1000}
+.tradeGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:18px}
+.trade{position:relative;border-radius:10px;overflow:hidden;min-height:165px;border:1px solid #313336;background:#161719}
+.trade img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.78)}
+.trade .overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,rgba(0,0,0,.7));}
+.trade .text{position:absolute;left:14px;right:14px;bottom:14px}.trade h4{font-size:24px;line-height:1;margin:0 0 6px;font-style:italic;text-transform:uppercase}.trade p{margin:0;font-size:12px;color:#d3ccbd;text-transform:uppercase;letter-spacing:.6px}
+.builder{display:grid;grid-template-columns:420px 1fr;gap:20px;align-items:start;margin-top:20px}
+.panel{background:linear-gradient(180deg,#181a1c,#111214);border:1px solid #2d3034;border-radius:14px;padding:18px;box-shadow:0 18px 34px rgba(0,0,0,.26)}
+.panel h3{margin:0 0 10px;font-size:22px;text-transform:uppercase}
+.labelTxt{display:block;margin:14px 0 6px;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:#ddd2be}
+.input, select, textarea{width:100%;background:#0f1011;border:1px solid #373a3e;color:#f1ebde;border-radius:9px;padding:14px 13px;font:inherit}
+textarea{min-height:92px;resize:vertical}
+.upload{border:2px dashed #4d5156;background:#101214;border-radius:12px;padding:18px;text-align:center;font-weight:700;color:#dbd3c3}.upload input{display:none}
+.tiny{font-size:12px;color:#b8b0a2;line-height:1.55}
+.details{margin-top:14px;border-top:1px solid #2a2d31;padding-top:14px}
+.opt{display:flex;align-items:center;gap:10px;margin:9px 0}.opt input{accent-color:var(--red);width:18px;height:18px}
+.addons{border:1px solid #393c40;border-radius:12px;overflow:hidden;margin-top:14px;background:#101214}
+.addons summary{cursor:pointer;list-style:none;padding:15px 16px;font-weight:900;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}.addons summary::-webkit-details-marker{display:none}.addons summary:after{content:'+';font-size:24px;color:var(--sand)}.addons[open] summary:after{content:'−'}
+.addInner{padding:0 16px 16px}
+.previewPanel{display:grid;grid-template-columns:1fr 330px;gap:18px}
+.previewBox{background:#faf8f2;border-radius:16px;padding:16px;position:relative;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.previewBox:after{content:'';position:absolute;inset:12px;border:2px dashed #b7b0a2;border-radius:10px;pointer-events:none}
+.previewBox img{width:100%;aspect-ratio:1/1;object-fit:contain;position:relative;z-index:1}
+.statusPill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#121315;border:1px solid #34373b;font-size:12px;font-weight:900;text-transform:uppercase;color:#dfd7c8}
+.priceCard{display:flex;flex-direction:column;gap:16px}
+.priceBig{font-size:44px;font-weight:1000}.priceSmall{font-size:13px;color:#beb6a8;line-height:1.6}
+.list{margin:0;padding-left:18px;color:#dbd4c7;line-height:1.9;font-size:14px}
+.notice{border-left:4px solid var(--red);background:#1c1d20;padding:14px 15px;border-radius:10px;font-size:13px;color:#d3cbbd;line-height:1.55}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.wall{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:center}
+.wallShot{border-radius:16px;overflow:hidden;border:1px solid #2d3034;box-shadow:0 18px 36px rgba(0,0,0,.3)}
+.wallShot img{width:100%;height:auto;object-fit:contain}
+.backendGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}
+.backendCard{background:linear-gradient(180deg,#191a1b,#101113);border:1px solid #2c2e31;padding:18px;border-radius:12px}
+.backendCard h4{margin:0 0 8px;font-size:20px}.backendCard p{margin:0;color:#c3bbac;line-height:1.55;font-size:14px}
+.footer{padding:28px 0 50px;color:#ada596;font-size:12px;border-top:1px solid #25272a;margin-top:24px}
+hr.sep{border:0;height:1px;background:#26282b;margin:12px 0 0}
+@media (max-width: 1080px){.tradeGrid{grid-template-columns:repeat(3,1fr)}.builder,.wall,.previewPanel,.heroGrid{grid-template-columns:1fr}.conversions{grid-template-columns:1fr}.previewPanel{grid-template-columns:1fr}.process{grid-template-columns:1fr}.backendGrid{grid-template-columns:1fr 1fr}}
+@media (max-width: 760px){.links{display:none}.tradeGrid{grid-template-columns:1fr 1fr}.backendGrid{grid-template-columns:1fr}.headline{letter-spacing:-1px}.builder{grid-template-columns:1fr}.convMedia{grid-template-columns:1fr;gap:10px}.arrowMini{transform:rotate(90deg)}.heroVisual{grid-template-columns:1fr}}
+@media (max-width: 520px){.tradeGrid{grid-template-columns:1fr}.headline{font-size:44px}.ctas .btn,.actions .btn{width:100%}.brand{font-size:25px}.hero{padding-top:16px}}
+
+.demoBanner{position:sticky;top:78px;z-index:9;background:#f4cc56;color:#121212;text-align:center;padding:11px 12px;font-weight:900;border-bottom:3px solid #181818;letter-spacing:.35px}.demoBanner small{display:block;font-weight:600;font-size:12px;margin-top:4px}.demoBanner a{text-decoration:underline}.demoOverlay{position:absolute;top:18px;right:18px;z-index:3;background:#f4cc56;color:#111;border-radius:4px;padding:8px 10px;font-weight:900;font-size:12px}.previewBox{overflow:hidden}.nav a[href="#backend"]{display:none}@media(max-width:760px){.demoBanner{top:78px;font-size:13px}}
+
+.brandLogo{display:block;flex-shrink:0}.brandLogo:after{display:none}.brandLogo img{width:245px;height:75px;object-fit:contain;display:block}.shopNav{font-weight:900;color:#ff5959;font-size:12px;border:1px solid #922e2e;padding:10px;border-radius:4px}.stickerGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:24px}.stickerItem{padding:12px;border:1px solid #3b3b3b;border-radius:12px;background:#171717}.stickerItem img{width:100%;border-radius:8px;aspect-ratio:1;object-fit:cover}.stickerItem h3{font-size:16px;margin:13px 0 7px;color:#f6e8ce}.stickerItem p{color:#bcb2a4;font-size:12px;margin:0 0 8px}.siteLead{font-weight:900;color:#f1cf75;margin-top:12px}@media(max-width:800px){.stickerGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.brandLogo img{width:180px;height:60px}.shopNav{display:none}}@media(max-width:480px){.stickerGrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap nav">
+    <a href="#home" class="brand brandLogo" aria-label="Earl Rags home"><img src="assets/earl-logo-locked.png" alt="Earl Rags original script logo"></a>
+    <nav class="links">
+      <a href="#home" class="active">Home</a>
+      <a href="#builder">Build Your Rag</a>
+      <a href="#conversions">Real Conversions</a>
+      <a href="#trades">Trades</a>
+      <a href="#shop">Shop</a>
+      <a href="#wild">Dirty Rag Wall</a>
+      <a href="#backend">Orders</a>
+    </nav>
+    <a class="shopNav" href="#shop">STICKER SHOP</a>
+  </div>
+</header>
+<div class="demoBanner" role="status">🚧 PUBLIC PREVIEW — STICKERS & CUSTOM RAGS COMING SOON. NO ORDERS OR PAYMENTS YET <small>We’re excited to launch Earl Rags soon. Explore the concept, try the sample builder, and stay tuned for the full release.</small></div>
+
+<main id="home">
+  <section class="hero">
+    <div class="wrap heroGrid">
+      <div class="heroCopy">
+        <span class="kicker">Public preview • Earl centered every time</span>
+        <h1 class="headline"><span class="stroke">Custom Rags</span><span class="accent">For Dirty Jobs</span></h1>
+        <p class="sub">Turn your ride, bike, truck, machine, or crew vehicle into a custom oil-check rag. Earl stays centered, bent into the engine bay, with the same classic wipe-zone placement every single time.</p>
+        <div class="ctas">
+          <a class="btn" href="#builder">Build Your Rag →</a>
+          <a class="btn secondary" href="#conversions">Explore Concept Gallery</a>
+        </div>
+        <div class="quick">
+          <span>🚗 Cars</span>
+          <span>🏍️ Bikes</span>
+          <span>🛻 Trucks</span>
+          <span>🏗️ Any machine</span>
+        </div>
+        <div class="process">
+          <div class="step"><b>1 · Upload your ride</b><p>Add your photo or select a category.</p></div>
+          <div class="step"><b>2 · We generate it</b><p>The AI creates your Earl Rag preview.</p></div>
+          <div class="step"><b>3 · You approve it</b><p>You request changes or approve before ordering.</p></div>
+        </div>
+      </div>
+      <div class="heroVisual">
+        <article class="card visual">
+          <span class="label">Concept reference</span>
+          <div class="photoPad"><img src="assets/forester-concept-before.jpg" alt="Generic vehicle illustration placeholder; no source photograph"></div>
+          <div class="afterNote">AI-generated reference illustration — no personal or account details included.</div>
+        </article>
+        <article class="card visual">
+          <span class="label" style="background:#ff2a32;color:white;left:auto;right:12px;transform:rotate(4deg)">After</span>
+          <div class="photoPad"><img src="assets/earl-final.png" alt="Final Earl Rags transformation with older funnier Earl centered on a black Subaru"></div>
+          <div class="afterNote">Illustrative concept art of Earl, not yet a model-accurate conversion of this specific photo.</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  
+
+  <section class="section" id="wild">
+    <div class="wrap wall">
+      <div>
+        <h2 class="sectionTitle">In The Wild<div class="underline"></div></h2>
+        <p class="muted">Four different lifestyles, four different vehicles — the original approved people and rag scenes are unchanged. The real product standard stays fixed: Earl centered, back facing out, and the Earl Rags script logo at the lower-right of every rag.</p>
+        <div class="notice">Concept scene only — promotional mockups showing how Earl Rags can speak to multiple audiences before sales and ordering go live.</div>
+      </div>
+      <div class="wallShot"><img src="assets/in-the-wild-approved-original.png" alt="Four lifestyle story panels: rig hand with loader, car mechanic with old Dodge, tuner with Honda Civic Type R, and soccer mom with Dodge Caravan, each holding a matching Earl Rag"></div>
+    </div>
+  </section>
+
+
+
+  <section class="section" id="conversions">
+    <div class="wrap">
+      <h2 class="sectionTitle">Concept Gallery<div class="underline"></div></h2>
+      <p class="muted">These before-and-after panels are demonstration concepts for the Earl Rags experience. Customer-submitted photos will eventually be transformed into this same gritty style, with Earl centered and the logo locked in the bottom-right corner of every rag.</p>
+      <div class="conversions">
+        <article class="convCard">
+          <div class="convMedia">
+            <div class="cell"><span class="badge">Placeholder</span><img src="assets/bike-concept-before.jpg" alt="Generic motorcycle illustration placeholder"></div>
+            <div class="arrowMini">→</div>
+            <div class="cell" style="display:flex;justify-content:center;align-items:center;color:#111;text-align:center;padding:14px;font-weight:900">CUSTOM EARL ART<br>COMING SOON</div>
+          </div>
+          <div class="convMeta"><h3>Bagger / Motorcycle</h3><p>AI-generated touring motorcycle concept showing how Earl would appear in a bike-specific scene.</p></div>
+        </article>
+        <article class="convCard">
+          <div class="convMedia">
+            <div class="cell"><span class="badge">Placeholder</span><img src="assets/jdm-concept-before.jpg" alt="Generic JDM illustration placeholder"></div>
+            <div class="arrowMini">→</div>
+            <div class="cell" style="display:flex;justify-content:center;align-items:center;color:#111;text-align:center;padding:14px;font-weight:900">CUSTOM EARL ART<br>COMING SOON</div>
+          </div>
+          <div class="convMeta"><h3>JDM Coupe</h3><p>AI-generated JDM coupe concept for imports, drift builds and turbo Hondas.</p></div>
+        </article>
+        <article class="convCard">
+          <div class="convMedia">
+            <div class="cell"><span class="badge">Placeholder</span><img src="assets/truck-concept-before.jpg" alt="Generic work truck illustration placeholder"></div>
+            <div class="arrowMini">→</div>
+            <div class="cell" style="display:flex;justify-content:center;align-items:center;color:#111;text-align:center;padding:14px;font-weight:900">CUSTOM EARL ART<br>COMING SOON</div>
+          </div>
+          <div class="convMeta"><h3>Work Truck</h3><p>AI-generated work-truck concept. Real custom builds can replace samples after permission and approval.</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="trades">
+    <div class="wrap">
+      <h2 class="sectionTitle">Built For Every Trade<div class="underline"></div></h2>
+      <p class="muted">The main audience can be JDM and Subaru builds, but the site should still show range: bikes, trucks, techs, site crews, and heavy equipment. Same attitude, different machines.</p>
+      <div class="tradeGrid">
+        <article class="trade"><img src="assets/jdm-concept-before.jpg" alt="JDM car"><div class="overlay"></div><div class="text"><h4>Car Scene / JDM</h4><p>imports · drift · street</p></div></article>
+        <article class="trade"><img src="assets/bike-concept-before.jpg" alt="Motorcycle"><div class="overlay"></div><div class="text"><h4>Bikes / Baggers</h4><p>street · touring · custom</p></div></article>
+        <article class="trade"><img src="assets/garage-tech-concept.jpg" alt="AI generated workshop mechanic concept"><div class="overlay"></div><div class="text"><h4>Mechanics & Techs</h4><p>garages · shops · diy</p></div></article>
+        <article class="trade"><img src="assets/truck-concept-before.jpg" alt="Concept work truck"><div class="overlay"></div><div class="text"><h4>Construction Crews</h4><p>dirty jobs · field work</p></div></article>
+        <article class="trade"><img src="assets/heavy-equipment-concept.jpg" alt="AI generated heavy equipment concept"><div class="overlay"></div><div class="text"><h4>Heavy Equipment</h4><p>machines · fleet · more</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  
+<section class="section" id="shop"><div class="wrap"><h2 class="sectionTitle">The Sticker Shop<div class="underline"></div></h2><p class="muted">Dirty jokes for clean toolboxes. Here’s a first look at Earl’s upcoming garage stickers—made with the <b>original locked Earl illustration</b>, not a newly generated character.</p><p class="siteLead">PREVIEW ONLY · COMING SOON · NO SALES OR CHECKOUT</p><div class="stickerGrid"><article class="stickerItem"><img src="assets/sticker-01.jpg" alt="Earl Rags sticker concept CHECK MY OIL, NOT MY ATTITUDE"><h3>CHECK MY OIL, NOT MY ATTITUDE</h3><p>Dipstick certified · Concept art, not available for purchase.</p></article><article class="stickerItem"><img src="assets/sticker-02.jpg" alt="Earl Rags sticker concept MY CRACK IS THE DIPSTICK TARGET"><h3>MY CRACK IS THE DIPSTICK TARGET</h3><p>Wipe Earl responsibly · Concept art, not available for purchase.</p></article><article class="stickerItem"><img src="assets/sticker-03.jpg" alt="Earl Rags sticker concept LOW BOOST. HIGH BULLSHIT."><h3>LOW BOOST. HIGH BULLSHIT.</h3><p>Garage edition · Concept art, not available for purchase.</p></article><article class="stickerItem"><img src="assets/sticker-04.jpg" alt="Earl Rags sticker concept KEEP YOUR HANDS DIRTY"><h3>KEEP YOUR HANDS DIRTY</h3><p>And your dipstick clean · Concept art, not available for purchase.</p></article><article class="stickerItem"><img src="assets/sticker-05.jpg" alt="Earl Rags sticker concept TORQUE IT TILL IT GETS EXPENSIVE"><h3>TORQUE IT TILL IT GETS EXPENSIVE</h3><p>Shop wisdom · Concept art, not available for purchase.</p></article><article class="stickerItem"><img src="assets/sticker-06.jpg" alt="Earl Rags sticker concept HONK IF YOUR ENGINE LEAKS"><h3>HONK IF YOUR ENGINE LEAKS</h3><p>Probably Earl’s fault · Concept art, not available for purchase.</p></article></div></div></section>
+
+  <section class="section" id="builder">
+    <div class="wrap">
+      <h2 class="sectionTitle">Build Your Rag<div class="underline"></div></h2>
+      <p class="muted">Explore the sample artwork and test the vehicle selection experience. Your uploaded photo stays in your browser. Sales, custom ordering, payment processing, and live AI generation are not active during this preview — but we’re excited to launch soon, so stay tuned.</p>
+      <div class="builder">
+        <form class="panel" onsubmit="return false">
+          <h3>Customer flow</h3>
+          <label class="labelTxt">Vehicle or machine category</label>
+          <select id="category" class="input">
+            <option>Subaru / Car Scene</option>
+            <option>Honda / JDM</option>
+            <option>Motorcycle / Bagger</option>
+            <option>Truck / Work Rig</option>
+            <option>Heavy Equipment / Machine</option>
+            <option>Other</option>
+          </select>
+          <label class="labelTxt">Upload vehicle photo</label>
+          <label class="upload">Tap to choose a photo for testing
+            <input id="photoInput" type="file" accept="image/png,image/jpeg,image/webp">
+            <div class="tiny" id="uploadName" style="margin-top:8px">No file selected</div>
+          </label>
+          <label class="labelTxt">Notes for the image generator</label>
+          <textarea id="notes" placeholder="Example: black 2004 Forester, front view, lowered, keep Earl centered, no background, JDM vibe"></textarea>
+          <details class="addons">
+            <summary>Optional add-ons menu</summary>
+            <div class="addInner">
+              <label class="opt"><input type="checkbox" id="addText"> <span>Custom text + $2</span></label>
+              <input id="textValue" class="input" type="text" maxlength="40" placeholder="Enter your custom text" style="display:none;margin:10px 0 12px">
+              <label class="opt"><input type="checkbox" id="addBg"> <span>Background upgrade + $2</span></label>
+              <textarea id="bgValue" placeholder="Describe the garage, pit, or background scene" style="display:none;margin-top:10px"></textarea>
+            </div>
+          </details>
+          <div class="details">
+            <div class="notice">Core rule stays locked: <b>Earl is always centered</b> for the good old-fashioned wipe. Same 12 × 12 format, same clean border, no background by default.</div>
+            <div class="actions">
+              <button class="btn" id="generateBtn" type="button">Show sample Earl artwork</button>
+              <button class="btn secondary" id="adjustBtn" type="button" disabled>Test a revision</button>
+            </div>
+          </div>
+        </form>
+        <div class="previewPanel">
+          <div class="previewBox">
+            <img id="previewImage" src="assets/earl-final.png" alt="Earl Rags preview art">
+          </div>
+          <aside class="panel priceCard">
+            <div>
+              <span class="statusPill" id="statusPill">Test preview ready</span>
+            </div>
+            <div>
+              <div class="priceBig" id="priceTag">$19.99</div>
+              <div class="priceSmall">Standard 12 × 12 white cloth rag with one-inch clean border. Earl stays centered. Optional upgrades stay hidden until the customer chooses them.</div>
+            </div>
+            <ul class="list">
+              <li>Upload your ride or machine</li>
+              <li>AI generation coming later — currently a fixed example</li>
+              <li>You approve or request changes</li>
+              <li>No submissions or emails are sent during demo</li>
+            </ul>
+            <div class="actions">
+              <button class="btn" id="approveBtn" type="button" disabled>Approve sample (demo)</button>
+              <button class="btn secondary" id="orderBtn" type="button" disabled>Download demo details</button>
+            </div>
+            <div class="notice" id="orderNote">The demo preview is not generated from your uploaded photo; it shows the sample Earl illustration. No payment is taken. Artwork generation and payment are not connected. You can request a custom proof below when email is configured.</div>
+          </aside>
+        </div>
+      </div>
+      <div class="panel" id="proofRequest" style="margin-top:22px"><h3>Want to hear when the shop opens?</h3><p class="muted">Earl Rags is still in demo mode. Sales, ordering, and payments are not live yet, but we’re excited to get started soon. Stay tuned for launch updates, and feel free to email <a style="text-decoration:underline;color:#f4cc56" href="mailto:thomas@earlrags.com?subject=Earl%20Rags%20Demo%20Question">thomas@earlrags.com</a> with questions.</p></div>
+    </div>
+  </section><section class="section" id="roadmap"><div class="wrap"><div class="panel" style="border-color:#a83b3d"><h2 class="sectionTitle" style="font-size:36px">From Concept to Production</h2><p class="muted">This is an investor-facing demonstration of the Earl Rags brand, product design and future customer experience. Image transformations are illustrative AI-generated examples. Live AI generation, payment processing, fulfillment software and physical product testing remain in development.</p><div class="process"><div class="step"><b>Prototype</b><p>12×12 rag and centered Earl illustration design</p></div><div class="step"><b>Validation</b><p>Heat-transfer quality, oil absorbency and wash testing</p></div><div class="step"><b>Launch</b><p>AI customization, approvals, self-printing and order dashboard</p></div></div></div></div></section></main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="brand" style="display:inline-block;font-size:24px">earlrags.com</div>
+    <p style="margin-top:16px">Earl Rags public preview · Concept images are sample visuals only. Sales, ordering, payments, and live AI generation are not available yet. We’re excited to launch soon — stay tuned.</p>
+  </div>
+</footer>
+
+<script>
+const $ = s => document.querySelector(s);
+const addText = $('#addText'), addBg = $('#addBg'), textValue = $('#textValue'), bgValue = $('#bgValue');
+const priceTag = $('#priceTag'), statusPill = $('#statusPill'), orderNote = $('#orderNote');
+const uploadName = $('#uploadName');
+let generated = false, approved = false;
+function updatePrice(){
+  let total = 19.99 + (addText.checked ? 2 : 0) + (addBg.checked ? 2 : 0);
+  priceTag.textContent = '$' + total.toFixed(2);
+  textValue.style.display = addText.checked ? 'block' : 'none';
+  bgValue.style.display = addBg.checked ? 'block' : 'none';
+}
+addText.addEventListener('change', updatePrice);
+addBg.addEventListener('change', updatePrice);
+$('#photoInput').addEventListener('change', e => {
+  const file = e.target.files[0];
+  uploadName.textContent = file ? file.name : 'No file selected';
+  if(file){
+    const url = URL.createObjectURL(file);
+    $('#previewImage').src = url;
+    statusPill.textContent = 'Uploaded photo loaded';
+    generated = false; approved = false;
+    $('#approveBtn').disabled = true; $('#orderBtn').disabled = true; $('#adjustBtn').disabled = true;
+    orderNote.textContent = 'Uploaded photo loaded into the preview area for testing. Generate a preview next.';
+  }
+});
+$('#generateBtn').addEventListener('click', () => {
+  generated = true; approved = false;
+  $('#previewImage').src = 'assets/earl-final.png';
+  statusPill.textContent = 'Sample artwork shown (not AI generated)';
+  $('#adjustBtn').disabled = false; $('#approveBtn').disabled = false; $('#orderBtn').disabled = true;
+  orderNote.textContent = 'This is the same sample illustration for everyone. Your photo was NOT transformed by AI.';
+});
+$('#adjustBtn').addEventListener('click', () => {
+  statusPill.textContent = 'Changes requested';
+  approved = false;
+  $('#approveBtn').disabled = false; $('#orderBtn').disabled = true;
+  orderNote.textContent = 'Revision request recorded in the demo. Live version would re-generate the design and keep Earl centered.';
+});
+$('#approveBtn').addEventListener('click', () => {
+  if(!generated) return;
+  approved = true;
+  statusPill.textContent = 'Demo sample approved';
+  $('#orderBtn').disabled = false;
+  orderNote.textContent = 'Sample approval exists only in this browser. Nothing was submitted or purchased.';
+});
+$('#orderBtn').addEventListener('click', () => {
+  if(!approved) return;
+  const payload = {
+    status:'DEMO ORDER ONLY',
+    emailTarget:'thomas@earlrags.com',
+    category: $('#category').value,
+    notes: $('#notes').value,
+    customText: addText.checked ? textValue.value : null,
+    backgroundUpgrade: addBg.checked ? bgValue.value : null,
+    total: priceTag.textContent,
+    approved: true,
+    rule: 'Earl always centered',
+    createdAt: new Date().toISOString()
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'earl-rags-demo-order.json'; a.click();
+  URL.revokeObjectURL(url);
+  orderNote.textContent = 'Test details downloaded to your device only. Nothing was submitted or purchased.';
+});
+updatePrice();
+
+</script>
+</body>
+</html>
